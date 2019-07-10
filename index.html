@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Webtronome</title>
+    <link href="app.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body>
+    <h1>webtronome</h1>
+    <div id="controls">
+      <div id="bpm" contenteditable="true">60</div>
+      <div id="start">start</div>
+    </div>
+    <script type="text/javascript">
+      let audio = new Audio('click.wav')
+      let playing = false
+      let interval
+      function start() {
+        if (!playing) {
+          const bpm = parseInt(document.getElementById("bpm").innerHTML)
+          const millisecondsInAMinute = 60000
+          const clickDurationInMilliseconds = Math.floor(millisecondsInAMinute / bpm)
+          interval = setInterval(function() { audio.play() }, clickDurationInMilliseconds)
+          playing = true
+          document.getElementById("start").textContent="stop"
+        } else {
+          clearInterval(interval)
+          playing = false
+          document.getElementById("start").textContent="start"
+        }
+      }
+      document.getElementById("start").addEventListener("click", start)
+    </script>
+  </body>
+</html>
